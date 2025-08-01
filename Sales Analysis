@@ -1,0 +1,35 @@
+CREATE TABLE DimDate (
+    DateKey INT PRIMARY KEY,
+    FullDate DATE,
+    Year INT,
+    Month INT,
+    MonthName NVARCHAR(20),
+    Quarter INT
+);
+
+CREATE TABLE DimCustomer (
+    CustomerID INT PRIMARY KEY,
+    CustomerName NVARCHAR(100),
+    Email NVARCHAR(100),
+    LoyaltyTier NVARCHAR(20)
+);
+
+CREATE TABLE DimProduct (
+    ProductID INT PRIMARY KEY,
+    ProductName NVARCHAR(100),
+    Category NVARCHAR(50),
+    UnitPrice DECIMAL(10,2)
+);
+
+CREATE TABLE FactSales (
+    SaleID INT PRIMARY KEY,
+    DateKey INT,
+    CustomerID INT,
+    ProductID INT,
+    Quantity INT,
+    TotalAmount DECIMAL(10,2),
+    Region NVARCHAR(50),
+    FOREIGN KEY (DateKey) REFERENCES DimDate(DateKey),
+    FOREIGN KEY (CustomerID) REFERENCES DimCustomer(CustomerID),
+    FOREIGN KEY (ProductID) REFERENCES DimProduct(ProductID)
+);
